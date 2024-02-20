@@ -91,7 +91,7 @@ enableMatrixIntegration = false
 aggregateMonitoring = false
 # 描述: 记录可疑玩家的分钟数。默认为5分钟。
 recordMinutes = 5
-# 描述: 可疑玩家录制存储路径的模板，支持${name}和${uuid}变量。仅在aggregateMonitoring = true时有意义。
+# 描述: 可疑玩家录制存储路径的模板，支持${name}和${uuid}变量。仅在aggregateMonitoring = false时有意义。
 recordPath = "replay/suspicious/${name}@${uuid}"
 # 描述: 可疑玩家录制存储路径的模板，支持${name}和${uuid}变量。仅在aggregateMonitoring = true时有意义。
 themisRecordPath = "replay/suspicious/Themis/${name}@${uuid}"
