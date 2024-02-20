@@ -1,15 +1,16 @@
-package cn.xor7.iseeyou
+package xaviermc.top.iseeyou
 
-import cn.xor7.iseeyou.anticheat.AntiCheatListener
-import cn.xor7.iseeyou.anticheat.listeners.MatrixListener
-import cn.xor7.iseeyou.anticheat.listeners.ThemisListener
-import cn.xor7.iseeyou.anticheat.suspiciousPhotographers
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandExecutor
 import org.bukkit.configuration.InvalidConfigurationException
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import top.leavesmc.leaves.entity.Photographer
+import xaviermc.top.iseeyou.anticheat.AntiCheatListener
+import xaviermc.top.iseeyou.anticheat.listeners.MatrixListener
+import xaviermc.top.iseeyou.anticheat.listeners.ThemisListener
+import xaviermc.top.iseeyou.anticheat.suspiciousPhotographers
+import xaviermc.top.iseeyou.metrics.Metrics
 import java.io.IOException
 import java.nio.file.*
 import java.nio.file.attribute.BasicFileAttributes
@@ -18,6 +19,7 @@ import java.time.LocalDate
 import java.util.*
 import kotlin.io.path.isDirectory
 import kotlin.math.pow
+
 
 var toml: TomlEx<ConfigData>? = null
 var photographers = mutableMapOf<String, Photographer>()
@@ -67,6 +69,16 @@ class ISeeYou : JavaPlugin(), CommandExecutor {
         if (Bukkit.getPluginManager().isPluginEnabled("Matrix") ||
             toml!!.data.recordSuspiciousPlayer.enableMatrixIntegration
         ) Bukkit.getPluginManager().registerEvents(MatrixListener(), this)
+
+        if (toml!!.data.enableBstats){
+            val pluginId = 21068
+            val metrics: Metrics = Metrics(this, pluginId)
+            metrics.addCustomChart(
+                Metrics.SimplePie(
+                    "chart_id"
+                ) { "My value" })
+
+        }
     }
 
     private fun setupConfig() {

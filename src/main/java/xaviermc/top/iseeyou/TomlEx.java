@@ -1,4 +1,4 @@
-package cn.xor7.iseeyou;
+package xaviermc.top.iseeyou;
 
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;

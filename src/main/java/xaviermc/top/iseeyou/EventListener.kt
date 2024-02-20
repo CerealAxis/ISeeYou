@@ -1,4 +1,4 @@
-package cn.xor7.iseeyou
+package xaviermc.top.iseeyou
 
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler

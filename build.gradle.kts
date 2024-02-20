@@ -6,8 +6,8 @@ plugins {
     kotlin("jvm") version "1.9.0"
 }
 
-group = "cn.xor7"
-version = "1.1.3"
+group = "xaviermc.top"
+version = "1.1.4"
 
 repositories {
     mavenLocal()
@@ -25,9 +25,10 @@ repositories {
 dependencies {
     compileOnly(files("libs/ThemisAPI_0.15.3.jar"))
     compileOnly(files("libs/Matrix_7.7.15A.jar"))
-    implementation("com.moandjiezana.toml:toml4j:0.7.2")
     compileOnly("top.leavesmc.leaves:leaves-api:1.20.1-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compileOnly("org.bstats:bstats-bukkit:3.0.2")
+    implementation("com.moandjiezana.toml:toml4j:0.7.2")
 }
 
 val targetJavaVersion = 17
@@ -60,6 +61,7 @@ tasks.withType<ShadowJar> {
     exclude("META-INF/*.DSA")
     exclude("META-INF/*.RSA")
     mergeServiceFiles()
+    relocate("org.bstats", "xaviermc.top.iseeyou.bstats")
 }
 
 kotlin {

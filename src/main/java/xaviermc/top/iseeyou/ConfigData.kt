@@ -1,4 +1,4 @@
-package cn.xor7.iseeyou
+package xaviermc.top.iseeyou
 
 import org.bukkit.entity.Player
 
@@ -10,6 +10,7 @@ data class ConfigData(
     var recordPath: String = "replay/player/\${name}@\${uuid}",
     var clearOutdatedRecordFile: OutdatedRecordRetentionConfig = OutdatedRecordRetentionConfig(),
     var recordSuspiciousPlayer: RecordSuspiciousPlayerConfig = RecordSuspiciousPlayerConfig(),
+    var enableBstats: Boolean = true,
     // var asyncSave: Boolean = false,
 ) {
     fun isConfigValid(): String? {
@@ -62,8 +63,11 @@ data class OutdatedRecordRetentionConfig(
 data class RecordSuspiciousPlayerConfig(
     var enableThemisIntegration: Boolean = false,
     var enableMatrixIntegration: Boolean = false,
+    var aggregateMonitoring: Boolean = false,
     var recordMinutes: Long = 5,
     var recordPath: String = "replay/suspicious/Themis/\${name}@\${uuid}",
+    var themisRecordPath: String = "replay/suspicious/Themis/\${name}@\${uuid}",
+    var matrixRecordPath: String = "replay/suspicious/Matrix/\${name}@\${uuid}"
 )
 
 data class FilterConfig(
