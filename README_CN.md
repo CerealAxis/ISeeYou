@@ -1,5 +1,7 @@
 # ISeeYou-Fork
 
+![logo](.github/logo/logo.png "logo")
+
 _也可以叫ICU_
 
 本项目为[ISeeYou](https://github.com/MC-XiaoHei/ISeeYou)的第三方版本，旨在带来更多实用功能的高性能分支。
