@@ -1,6 +1,8 @@
-# ISeeYou
+# ISeeYou-Fork
 
 _也可以叫ICU_
+
+本项目为[ISeeYou](https://github.com/MC-XiaoHei/ISeeYou)的第三方版本，旨在带来更多实用功能的高性能分支。
 
 [中文](README_CN.md) | [English](README.MD)
 
@@ -20,9 +22,9 @@ ISeeYou 可以利用 [Leaves](https://leavesmc.org/) 核心提供的 Replay API�
 
 - **自动录制**：无需手动操作，默认情况下插件会自动记录所有玩家。
 - **灵活配置**：可以通过配置文件设置黑白名单，以及录制路径等。
-- **反作弊支持**：适配 [Themis Anti Cheat](https://www.spigotmc.org/resources/themis-anti-cheat-1-17-1-20-bedrock-support-paper-compatibility-free-optimized.90766/)，在发现可疑玩家时自动进行录制 (Beta)
+- **反作弊支持**：适配 [Themis Anti Cheat](https://www.spigotmc.org/resources/themis-anti-cheat-1-17-1-20-bedrock-support-paper-compatibility-free-optimized.90766/)和[Matrix](https://matrix.rip/)，在发现可疑玩家时自动进行录制 (Beta)
 
-目前仅适配 [Themis Anti Cheat](https://www.spigotmc.org/resources/themis-anti-cheat-1-17-1-20-bedrock-support-paper-compatibility-free-optimized.90766/)，需要适配更多反作弊插件请开 Issue 提出！
+目前已适配 [Themis Anti Cheat](https://www.spigotmc.org/resources/themis-anti-cheat-1-17-1-20-bedrock-support-paper-compatibility-free-optimized.90766/)和[Matrix](https://matrix.rip/)，需要适配更多反作弊插件请开 Issue 提出！
 
 ## 使用说明
 
@@ -30,6 +32,7 @@ ISeeYou 可以利用 [Leaves](https://leavesmc.org/) 核心提供的 Replay API�
 
 - 服务端：**Leaves**
 - Themis 及其依赖 ProtocolLib（可选）
+- Matrix 及其依赖 ProtocolLib（可选）
 
 ### 使用教程
 
@@ -40,54 +43,60 @@ ISeeYou 可以利用 [Leaves](https://leavesmc.org/) 核心提供的 Replay API�
 
 ```toml
 # 默认值: true
-# 描述: 加载插件时是否删除临时文件，默认为 true。
+# 描述: 在加载插件时是否删除临时文件。默认值为true。
 deleteTmpFileOnLoad = true
 
 # 默认值: false
-# 描述: 玩家退出游戏时是否暂停录制而不是停止录制，默认为 false。
+# 描述: 当玩家退出游戏时是否暂停录制而不是停止录制。默认值为false。
 pauseInsteadOfStopRecordingOnPlayerQuit = false
 
 # 默认值: "replay/player/${name}@${uuid}"
-# 描述: 录像存储路径模板，支持 ${name} 和 ${uuid} 变量。
+# 描述: 录制存储路径的模板，支持${name}和${uuid}变量。
 recordPath = "replay/player/${name}@${uuid}"
 
+# 默认值: true
+# 描述: 是否启用Bstats（BungeeCord统计）。默认值为false。
+enableBstats = true
+
 [pauseRecordingOnHighSpeed]
-# enabled: 是否启用高速录制暂停功能，此功能在玩家高速运动时暂停录制，默认为 false。
+# 描述: 是否启用高速录制暂停功能。此功能在玩家以高速移动时暂停录制。默认值为false。
 enabled = false
-# threshold: 触发高速录制暂停的速度阈值，默认为 20.00。
+# 描述: 触发高速录制暂停的速度阈值。默认值为20.00。
 threshold = 20.0
 
 [filter]
-# checkBy: 黑白名单检查依据，可选值为 "name" 或 "uuid"，默认为 "name"，即下方的黑白名单中填写的是玩家名。
+# 描述: 检查黑名单和白名单的基准。可选值为"name"或"uuid"。默认值为"name"，这意味着玩家的名称填写在下面的黑名单和白名单中。
 checkBy = "name"
-# recordMode: 录制模式，可选值为 "blacklist" 或 "whitelist"，默认为 "blacklist"。
+# 描述: 录制模式。可选值为"blacklist"或"whitelist"。默认值为"blacklist"。
 recordMode = "blacklist"
-# blacklist: 黑名单，仅在录制模式为 "blacklist" 时有效。
+# 描述: 黑名单。仅在录制模式为"blacklist"时有效。
 blacklist = []
-# whitelist: 白名单，仅在录制模式为 "whitelist" 时有效。
+# 描述: 白名单。仅在录制模式为"whitelist"时有效。
 whitelist = []
 
 [clearOutdatedRecordFile]
-# enabled: 是否启用清理过期录像文件功能，默认为 false。
+# 描述: 是否启用清理过期录制文件的功能。默认值为false。
 enabled = false
-# days: 过期录像文件保留天数，默认为 7 天。
+# 描述: 保留过期录制文件的天数。默认值为7天。
 days = 7
 
 [recordSuspiciousPlayer]
-# enabledThemis: 是否启用监视可疑玩家录制功能（Themis），默认为 true（不安装Themis启用此项也无效）。
-enabledThemis = true
-# recordMinutes: 记录可疑玩家录像的分钟数，默认为 5 分钟。
+# 描述: 是否启用记录可疑玩家（Themis）的功能。默认为true（如果未安装Themis则无效）。
+enableThemisIntegration = false
+# 描述: 是否启用记录可疑玩家（Matrix）的功能。默认为true（如果未安装Themis则无效）。
+enableMatrixIntegration = false
+# 描述: 如果启用，只要玩家被任何反作弊系统标记，录制就会开始，并且不会重复录制。如果禁用，混合标记可能导致重复录制。
+aggregateMonitoring = false
+# 描述: 记录可疑玩家的分钟数。默认为5分钟。
 recordMinutes = 5
-# recordPath: 可疑玩家录像存储路径模板，支持 ${name} 和 ${uuid} 变量，默认为 "replay/suspicious/${name}@${uuid}"。
+# 描述: 可疑玩家录制存储路径的模板，支持${name}和${uuid}变量。仅在aggregateMonitoring = true时有意义。
 recordPath = "replay/suspicious/${name}@${uuid}"
+# 描述: 可疑玩家录制存储路径的模板，支持${name}和${uuid}变量。仅在aggregateMonitoring = true时有意义。
+themisRecordPath = "replay/suspicious/Themis/${name}@${uuid}"
+# 描述: 可疑玩家录制存储路径的模板，支持${name}和${uuid}变量。仅在aggregateMonitoring = true时有意义。
+matrixRecordPath = "replay/suspicious/Matrix/${name}@${uuid}"
 
 ```
-
-## 作者信息
-
-- 主要开发者：[MC-XiaoHei](https://github.com/MC-XiaoHei)，编写了大部分的的代码
-- 贡献者：[CerealAxis](https://github.com/CerealAxis)，帮助我制作了自动清理过期录像功能，并且编写了 README
-- 贡献者：[Cranyozen](https://github.com/Cranyozen)，帮助我完成了自动构建 CI
 
 ## 注意事项
 
@@ -95,6 +104,10 @@ recordPath = "replay/suspicious/${name}@${uuid}"
 - 请在使用插件前仔细阅读并配置好 `config.toml` 文件，以确保插件能够正常运行。
 - 尽管目前没有因为 reload 导致的 bug 报告，但尽量不要使用 Plugman 等插件热重载本插件,这可能会导致许多未知的问题！
 
+## Bstats统计
+[_![](https://bstats.org/signatures/bukkit/ISeeYou-Fork.svg)](https://bstats.org/plugin/bukkit/ISeeYou-Fork/21068)
+
+
 ## 感谢支持
 
-感谢您使用 ISeeYou 插件！如果您在使用过程中遇到任何问题或有任何建议，请随时联系作者或提交 [Issue](https://github.com/MC-XiaoHei/ISeeYou/issues) 到 GitHub 仓库。
+感谢您使用 ISeeYou 插件！如果您在使用过程中遇到任何问题或有任何建议，请随时联系作者或提交 [Issue](https://github.com/Xavier-MC/ISeeYou) 到 GitHub 仓库。

@@ -53,7 +53,7 @@ pauseInsteadOfStopRecordingOnPlayerQuit = false
 recordPath = "replay/player/${name}@${uuid}"
 
 # Default: true
-# Description: Whether to enable Bstats (BungeeCord statistics). Default is false.
+# Description: Whether to enable Bstats . Default is false.
 enableBstats = true
 
 [pauseRecordingOnHighSpeed]
@@ -80,15 +80,8 @@ days = 7
 
 [recordSuspiciousPlayer]
 # Description: Whether to enable the function of recording suspicious players (Themis). Default is true (it's ineffective if Themis isn't installed).
-enabledThemis = true
-# Description: The number of minutes to record suspicious players. Default is 5 minutes.
-recordMinutes = 5
-# Description: Template for the suspicious player recording storage path, supports ${name} and ${uuid} variables. Default is "replay/suspicious/${name}@${uuid}".
-recordPath = "replay/suspicious/${name}@${uuid}"
-
-# Description: Whether to enable the function of recording suspicious players (Themis). Default is true (it's ineffective if Themis isn't installed).
 enableThemisIntegration = false
-# Description: Whether to enable the function of recording suspicious players (Matrix). Default is true (it's ineffective if Themis isn't installed).
+# Description: Whether to enable the function of recording suspicious players (Matrix). Default is true (it's ineffective if Matrix isn't installed).
 enableMatrixIntegration = false
 # Description: If enabled, recording starts as soon as a player is flagged by any anti-cheat system, and it won't duplicate recordings. If disabled, mixed flags may cause duplicate recordings.
 aggregateMonitoring = false
