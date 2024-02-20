@@ -1,4 +1,4 @@
-name: ISeeYou
+name: ISeeYou-Fork
 version: ${version}
 main: xaviermc.top.iseeyou.ISeeYou
 api-version: '1.20'
