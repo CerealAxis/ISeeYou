@@ -1,6 +1,6 @@
 # ISeeYou-Fork
 
-![logo](.github/logo/logo.png "logo")
+<img alt="logo" height="100" src=".github/logo/logo.png" title="logo" width="100"/>
 
 _Also known as ICU_
 
