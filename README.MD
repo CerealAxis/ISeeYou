@@ -2,6 +2,8 @@
 
 _Also known as ICU_
 
+This project is a third-party version of [ISeeYou](https://github.com/MC-XiaoHei/ISeeYou), aiming to bring a high-performance branch with more practical features.
+
 [中文](README_CN.md) | [English](README.MD)
 
 ---
