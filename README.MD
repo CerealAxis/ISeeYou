@@ -6,6 +6,10 @@ _Also known as ICU_
 
 This project is a third-party version of [ISeeYou](https://github.com/MC-XiaoHei/ISeeYou), aiming to bring a high-performance branch with more practical features.
 
+I am also one of the contributors to the original project, and the original author of this plugin is [MC-XiaoHei](https://github.com/MC-XiaoHei).
+
+This project is open source under the MIT license on [Github](https://github.com/Xavier-MC/ISeeYou).
+
 [中文](README_CN.md) | [English](README.MD)
 
 ---
@@ -59,6 +63,10 @@ recordPath = "replay/player/${name}@${uuid}"
 # Default: true
 # Description: Whether to enable Bstats . Default is false.
 enableBstats = true
+
+# Default: true
+# Description: Whether to enable UpdateChecker . Default is true.
+enableUpdateChecker = true
 
 [pauseRecordingOnHighSpeed]
 # Description: Whether to enable the high-speed recording pause function. This function pauses recording when the player moves at high speed. Default is false.

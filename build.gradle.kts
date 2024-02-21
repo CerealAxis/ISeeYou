@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "xaviermc.top"
-version = "1.1.5"
+version = "1.1.6"
 
 repositories {
     mavenLocal()
@@ -25,7 +25,7 @@ repositories {
 dependencies {
     compileOnly(files("libs/ThemisAPI_0.15.3.jar"))
     compileOnly(files("libs/Matrix_7.7.15A.jar"))
-    compileOnly("top.leavesmc.leaves:leaves-api:1.20.1-R0.1-SNAPSHOT")
+    compileOnly("top.leavesmc.leaves:leaves-api:1.20.4-R0.1-SNAPSHOT")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     compileOnly("org.bstats:bstats-bukkit:3.0.2")
     implementation("com.moandjiezana.toml:toml4j:0.7.2")

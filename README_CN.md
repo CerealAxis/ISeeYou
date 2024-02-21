@@ -6,6 +6,10 @@ _也可以叫ICU_
 
 本项目为[ISeeYou](https://github.com/MC-XiaoHei/ISeeYou)的第三方版本，旨在带来更多实用功能的高性能分支。
 
+本人也是原项目的贡献者之一，本插件原作者[MC-XiaoHei](https://github.com/MC-XiaoHei)。
+
+本项目基于MIT协议开源于[Github](https://github.com/Xavier-MC/ISeeYou)
+
 [中文](README_CN.md) | [English](README.MD)
 
 ---
@@ -57,8 +61,12 @@ pauseInsteadOfStopRecordingOnPlayerQuit = false
 recordPath = "replay/player/${name}@${uuid}"
 
 # 默认值: true
-# 描述: 是否启用Bstats（BungeeCord统计）。默认值为false。
+# 描述: 是否启用Bstats（BungeeCord统计）。默认值为true。
 enableBstats = true
+
+# 默认值: true
+# 描述: 是否启用新版本检测。默认值为true。
+enableUpdateChecker = true
 
 [pauseRecordingOnHighSpeed]
 # 描述: 是否启用高速录制暂停功能。此功能在玩家以高速移动时暂停录制。默认值为false。
