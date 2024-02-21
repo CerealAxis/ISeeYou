@@ -11,6 +11,7 @@ data class ConfigData(
     var clearOutdatedRecordFile: OutdatedRecordRetentionConfig = OutdatedRecordRetentionConfig(),
     var recordSuspiciousPlayer: RecordSuspiciousPlayerConfig = RecordSuspiciousPlayerConfig(),
     var enableBstats: Boolean = true,
+    var enableUpdateChecker: Boolean = true,
     // var asyncSave: Boolean = false,
 ) {
     fun isConfigValid(): String? {

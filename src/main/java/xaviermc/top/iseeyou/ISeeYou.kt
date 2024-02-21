@@ -10,6 +10,7 @@ import xaviermc.top.iseeyou.anticheat.AntiCheatListener
 import xaviermc.top.iseeyou.anticheat.listeners.MatrixListener
 import xaviermc.top.iseeyou.anticheat.listeners.ThemisListener
 import xaviermc.top.iseeyou.anticheat.suspiciousPhotographers
+import xaviermc.top.iseeyou.lib.UpdateChecker
 import xaviermc.top.iseeyou.metrics.Metrics
 import java.io.IOException
 import java.nio.file.*
@@ -77,7 +78,10 @@ class ISeeYou : JavaPlugin(), CommandExecutor {
                 Metrics.SimplePie(
                     "chart_id"
                 ) { "My value" })
-
+        }
+        if (toml!!.data.enableUpdateChecker){
+            val updateChecker: UpdateChecker = UpdateChecker(this, 115177)
+            updateChecker.checkForUpdates()
         }
     }
 
