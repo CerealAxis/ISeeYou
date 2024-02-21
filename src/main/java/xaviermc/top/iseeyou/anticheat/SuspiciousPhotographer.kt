@@ -5,6 +5,8 @@ import top.leavesmc.leaves.entity.Photographer
 data class SuspiciousPhotographer(
     val photographer: Photographer,
     val name: String,
-    val lastTagged: Long,
+//    var matrixlastTagged: Long,
+//    var themislastTagged: Long,
+    var lastTagged: Long,
     val source: String? = null
 )

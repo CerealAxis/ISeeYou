@@ -14,7 +14,6 @@ import java.time.Duration
 import java.time.LocalDateTime
 import java.util.*
 
-
 val suspiciousPhotographers: MutableMap<String, SuspiciousPhotographer> = mutableMapOf()
 
 object AntiCheatListener : Listener {
@@ -38,7 +37,25 @@ object AntiCheatListener : Listener {
 
     fun onAntiCheatAction(player: Player, source: String? = null) {
         Bukkit.getScheduler().runTask(instance!!, Runnable {
-            val photographerName = (player.name + "_sus_" + UUID.randomUUID().toString().replace("-", "")).substring(0, 16)
+            val photographerName = if (toml!!.data.recordSuspiciousPlayer.aggregateMonitoring) {
+                val name = "Sus_${player.name}_${source ?: ""}_${UUID.randomUUID().toString().replace("-", "")}"
+                name.substring(0, 16)
+            } else {
+                val prefix = when (source) {
+                    "Themis" -> "Th"
+                    "Matrix" -> "Ma"
+                    else -> throw IllegalArgumentException("Unknown source: $source")
+                }
+                val name = "$prefix${player.name}_${UUID.randomUUID().toString().replace("-", "")}"
+                name.substring(0, 16)
+            }
+
+            val existingPhotographer = suspiciousPhotographers[player.name + source]
+            if (existingPhotographer != null) {
+                existingPhotographer.lastTagged = System.currentTimeMillis()
+                return@Runnable
+            }
+
             val photographer = Bukkit.getPhotographerManager().createPhotographer(photographerName, player.location)
 
             if (photographer == null) {
@@ -48,13 +65,13 @@ object AntiCheatListener : Listener {
             photographer.setFollowPlayer(player)
             val currentTime = LocalDateTime.now()
             val recordPath: String = if (toml!!.data.recordSuspiciousPlayer.aggregateMonitoring) {
+                toml!!.data.recordSuspiciousPlayer.recordPath
+            } else {
                 when (source) {
                     "Themis" -> toml!!.data.recordSuspiciousPlayer.themisRecordPath
                     "Matrix" -> toml!!.data.recordSuspiciousPlayer.matrixRecordPath
                     else -> throw IllegalArgumentException("Unknown source: $source")
                 }
-            } else {
-                toml!!.data.recordSuspiciousPlayer.recordPath
             }
                 .replace("\${name}", player.name)
                 .replace("\${uuid}", player.uniqueId.toString())
@@ -65,13 +82,13 @@ object AntiCheatListener : Listener {
                 recordFile.delete()
             }
             recordFile.createNewFile()
-            photographer.setRecordFile(recordFile)
-            suspiciousPhotographers[player.name] = SuspiciousPhotographer(
+            val suspiciousPhotographer = SuspiciousPhotographer(
                 photographer = photographer,
                 name = player.name,
                 lastTagged = System.currentTimeMillis(),
-                source = source
+                source = source,
             )
+            suspiciousPhotographers[player.name + source] = suspiciousPhotographer
         })
     }
 
