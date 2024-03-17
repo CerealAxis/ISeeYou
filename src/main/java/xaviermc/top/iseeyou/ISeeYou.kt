@@ -1,8 +1,11 @@
 package xaviermc.top.iseeyou
 
 import org.bukkit.Bukkit
+import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
+import org.bukkit.command.CommandSender
 import org.bukkit.configuration.InvalidConfigurationException
+import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import top.leavesmc.leaves.entity.Photographer
@@ -20,7 +23,7 @@ import java.time.LocalDate
 import java.util.*
 import kotlin.io.path.isDirectory
 import kotlin.math.pow
-
+import com.moandjiezana.toml.Toml
 
 var toml: TomlEx<ConfigData>? = null
 var photographers = mutableMapOf<String, Photographer>()
@@ -71,7 +74,7 @@ class ISeeYou : JavaPlugin(), CommandExecutor {
             toml!!.data.recordSuspiciousPlayer.enableMatrixIntegration
         ) Bukkit.getPluginManager().registerEvents(MatrixListener(), this)
 
-        if (toml!!.data.enableBstats){
+        if (toml!!.data.enableBstats) {
             val pluginId = 21068
             val metrics: Metrics = Metrics(this, pluginId)
             metrics.addCustomChart(
@@ -79,10 +82,12 @@ class ISeeYou : JavaPlugin(), CommandExecutor {
                     "chart_id"
                 ) { "My value" })
         }
-        if (toml!!.data.enableUpdateChecker){
+        if (toml!!.data.enableUpdateChecker) {
             val updateChecker: UpdateChecker = UpdateChecker(this, 115177)
             updateChecker.checkForUpdates()
         }
+        // Registering custom commands
+        this.getCommand("icu")?.setExecutor(this)
     }
 
     private fun setupConfig() {
@@ -179,4 +184,55 @@ class ISeeYou : JavaPlugin(), CommandExecutor {
         return deletedCount
     }
 
+    override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
+        if (command.name.equals("icu", ignoreCase = true)) {
+            if (args.isEmpty()) {
+                // Handle /icu command
+                // Add logic here if needed
+                return true
+            }
+
+            when (args[0]) {
+                "place" -> {
+                    if (args.size < 2 || args.size > 3) {
+                        sender.sendMessage("Usage: /icu place [name] [<player>]")
+                        return true
+                    }
+                    val name = args[1]
+                    val player: Player? = if (args.size == 3) Bukkit.getPlayer(args[2]) else sender as? Player
+                    if (player != null) {
+                        // Place photographer at player's location
+                        val photographer = Bukkit.getPhotographerManager().createPhotographer(name, player.location)
+                        if (photographer != null) {
+                            photographers[name] = photographer
+                            sender.sendMessage("Photographer '$name' has been placed.")
+                        } else {
+                            sender.sendMessage("Failed to place photographer.")
+                        }
+                    } else {
+                        sender.sendMessage("Player not found.")
+                    }
+                }
+
+                "remove" -> {
+                    if (args.size < 2) {
+                        sender.sendMessage("Usage: /icu remove [name]")
+                        return true
+                    }
+                    val name = args[1]
+                    val photographer = photographers.remove(name)
+                    if (photographer != null) {
+                        photographer.stopRecording()
+                        sender.sendMessage("Photographer '$name' has been removed.")
+                    } else {
+                        sender.sendMessage("Photographer '$name' not found.")
+                    }
+                }
+
+                else -> sender.sendMessage("Unknown command. Usage: /icu place|remove [name] <player>")
+            }
+            return true
+        }
+        return false
+    }
 }

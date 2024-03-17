@@ -33,7 +33,7 @@ public class TomlEx<T> extends Toml {
         save();
     }
 
-    public void read(){
+    public void read() {
         data = this.read(file).to(clazz);
     }
 
